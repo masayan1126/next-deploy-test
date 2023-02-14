@@ -29,20 +29,22 @@ module.exports = (shipit) => {
     })
 
     shipit.on('fetched', async () => {
-        shipit.start('npm:start')
+        shipit.start('npm:build')
     })
 
-    shipit.blTask('npm:start', async () => {
-        await shipit.log(`deploying to ...`)
+    shipit.blTask('npm:build', async () => {
+        await shipit.log(`start build ...`)
+        await shipit.local('npm install && npm run build')
+    })
+
+    shipit.on('updated', async () => {
+        shipit.start('npm:start')
+      })
+    
+      shipit.blTask('npm:start', async () => {
+        await shipit.log(`start server ...`)
         await shipit.remoteCopy("package.json", "/opt/deploy-test/")
         await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/")
-        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production`)
-        // await shipit.remote("")
-        // .then(() => {
-        // })
-        // .then(() => {
-        // })
-        // .then(() => {
-        // })
-    })
+        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run start`)
+      })
 }
