@@ -43,8 +43,8 @@ module.exports = (shipit) => {
     
     shipit.blTask('npm:install', async () => {
     await shipit.log(`install dep ...`)
-    await shipit.remoteCopy("package.json", "/opt/deploy-test/current/")
-    await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/current/")
+    await shipit.remoteCopy("package.json", "/opt/deploy-test/")
+    await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/")
     })
 
     shipit.on('published', async () => {
