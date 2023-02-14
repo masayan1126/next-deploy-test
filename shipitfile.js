@@ -21,8 +21,8 @@ module.exports = (shipit) => {
         },
         },
             branch: 'origin/develop',
-            // deployTo: '/opt/deploy-test',
-            // rsyncFrom: './.next',
+            deployTo: '/opt/deploy-test',
+            rsyncFrom: './.next',
             keepReleases: 3,
             key: '~/.ssh/ssh_key',
         }
