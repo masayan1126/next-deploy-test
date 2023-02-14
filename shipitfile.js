@@ -36,8 +36,8 @@ module.exports = (shipit) => {
         await shipit.log(`deploying to ...`)
         await shipit.remote(`cd /opt/deploy-test/current`)
         await shipit.remote(`nvm install 16`)
-        await shipit.remoteCopy("package.json", "/opt/deploy-test/current/")
-        await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/current/")
+        await shipit.remoteCopy("package.json", "/opt/deploy-test/")
+        await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/")
         await shipit.remote("npm install --production")
         // .then(() => {
         // })
