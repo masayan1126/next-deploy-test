@@ -21,8 +21,8 @@ module.exports = (shipit) => {
         },
         },
             branch: 'origin/develop',
-            deployTo: '/opt/deploy-test',
-            rsyncFrom: './.next',
+            // deployTo: '/opt/deploy-test',
+            // rsyncFrom: './.next',
             keepReleases: 3,
             key: '~/.ssh/ssh_key',
         }
@@ -34,9 +34,9 @@ module.exports = (shipit) => {
 
     shipit.blTask('npm:start', async () => {
         shipit.log(`deploying to ...`)
-        // await shipit.remote(`cd /opt/deploy-test/current`)
-        // .then(() => {
-        //     shipit.remote("npm install && npm run build && npm run start")
-        // })
+        shipit.remote(`cd /opt/deploy-test/current`)
+        .then(() => {
+            shipit.remote("npm install && npm run build && npm run start")
+        })
     })
 }
