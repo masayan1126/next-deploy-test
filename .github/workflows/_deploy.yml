@@ -39,7 +39,7 @@ jobs:
       #     path: node_modules
       #     key: ${{ runner.os }}-npm-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install npm package
-        if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+        # if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: npm install
 
       - name: Public IP Install
