@@ -33,7 +33,7 @@ module.exports = (shipit) => {
     })
 
     shipit.blTask('npm:start', async () => {
-        console.log("aaaa");
+        shipit.log(`deploying to ...`)
         // await shipit.remote(`cd /opt/deploy-test/current`)
         // .then(() => {
         //     shipit.remote("npm install && npm run build && npm run start")
