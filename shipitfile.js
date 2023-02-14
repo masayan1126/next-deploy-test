@@ -21,8 +21,8 @@ module.exports = (shipit) => {
         },
         },
             branch: 'origin/develop',
-            deployTo: '/opt/deploy-test/.next',
-            rsyncFrom: './.next',
+            deployTo: '/opt/deploy-test/',
+            rsyncFrom: '.',
             keepReleases: 3,
             key: '~/.ssh/ssh_key',
         }
@@ -43,8 +43,8 @@ module.exports = (shipit) => {
     
     shipit.blTask('npm:install', async () => {
     await shipit.log(`install dep ...`)
-    await shipit.remoteCopy("package.json", "/opt/deploy-test/")
-    await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/")
+    // await shipit.remoteCopy("package.json", "/opt/deploy-test/")
+    // await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/")
     })
 
     shipit.on('published', async () => {
@@ -54,6 +54,6 @@ module.exports = (shipit) => {
     shipit.blTask('npm:start', async () => {
     await shipit.log(`start server ...`)
     // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run start`)
-    await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production`)
+    // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production`)
     })
 }
