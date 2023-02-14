@@ -1,0 +1,14 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+ deploy:
+    uses: ./.github/workflows/_deploy.yml
+    secrets:
+      ssh_key: ${{secrets.SSH_KEY}}
+      securety_group_id: ${{ secrets.SECURITY_GROUP_ID }}
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

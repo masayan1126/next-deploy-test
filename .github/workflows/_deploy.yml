@@ -1,0 +1,93 @@
+name: Deploy to server
+on:
+  workflow_call:
+    secrets:
+      ssh_key:
+        description: "release server's ssh key"
+        required: true
+
+      securety_group_id:
+        description: "deploy ec2 security group id"
+        required: true
+
+      aws_access_key:
+        required: true
+
+      aws_secret_access_key:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use node.js v18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Check node and npm info
+        run: |
+          node -v
+          npm -v
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: node_modules_cache_id
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Public IP Install
+        id: ip
+        uses: haythem/public-ip@v1.3.0
+
+      - name: AWS CLI install
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --update
+          aws --version
+
+      - name: AWS set Credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          aws-access-key-id: ${{ secrets.aws_access_key }}
+          aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
+          aws-region: ap-northeast-1
+
+      - name: authorize ip address
+        id: authorize_ip_address
+        run:  |
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.securety_group_id }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+      - name: create ssh key
+        env:
+          SSH_KEY: ${{secrets.ssh_key}}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/ssh_key
+          chmod 400 ~/.ssh/ssh_key
+
+      - name: create ssh config
+        env:
+          HOST: ec2-13-230-136-66.ap-northeast-1.compute.amazonaws.com
+        run: |
+          cat <<EOT > ~/.ssh/config
+          HOST deploy-test-app
+             HostName $HOST
+             IdentityFile ~/.ssh/ssh_key
+             StrictHostKeyChecking no
+             UserKnownHostsFile /dev/null
+             Port 22
+             User ec2-user
+          EOT
+
+      # - name: run deploy
+      #   run: npx shipit deploy
+
+      - name: revoke ip address
+        if: always() && steps.authorize_ip_address.outcome == 'success'
+        run: |
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.securety_group_id }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
