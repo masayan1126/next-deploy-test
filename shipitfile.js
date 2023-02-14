@@ -33,16 +33,16 @@ module.exports = (shipit) => {
     })
 
     shipit.blTask('npm:start', async () => {
-        shipit.log(`deploying to ...`)
-        shipit.remote(`cd /opt/deploy-test/current`)
-        .then(() => {
-            shipit.remoteCopy("package.json", "/opt/deploy-test/current/")
-        })
-        .then(() => {
-            shipit.remoteCopy("package-lock.json", "/opt/deploy-test/current/")
-        })
-        .then(() => {
-            shipit.remote("npm install --production")
-        })
+        await shipit.log(`deploying to ...`)
+        await shipit.remote(`cd /opt/deploy-test/current`)
+        await shipit.remoteCopy("package.json", "/opt/deploy-test/current/")
+        await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/current/")
+        await shipit.remote("~/.nvm/versions/node/v16.15.1/bin/npm install --production")
+        // .then(() => {
+        // })
+        // .then(() => {
+        // })
+        // .then(() => {
+        // })
     })
 }
