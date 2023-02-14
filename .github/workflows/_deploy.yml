@@ -88,7 +88,7 @@ jobs:
           EOT
 
       - name: run deploy
-        run: npx shipit stating deploy
+        run: npm shipit stating deploy
 
       - name: revoke ip address
         if: always() && steps.authorize_ip_address.outcome == 'success'
