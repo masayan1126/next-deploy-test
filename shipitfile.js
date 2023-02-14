@@ -37,7 +37,9 @@ module.exports = (shipit) => {
         shipit.remote(`cd /opt/deploy-test/current`)
         .then(() => {
             shipit.remoteCopy("package.json", "/opt/deploy-test/current/")
-            shipit.remoteCopy("package-lock.json", "/opt/deploy-test/current/")
+            .then(() => {
+                shipit.remoteCopy("package-lock.json", "/opt/deploy-test/current/")
+            })
             .then(() => {
                 shipit.remote("npm install --production")
             })
