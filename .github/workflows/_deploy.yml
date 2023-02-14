@@ -74,17 +74,17 @@ jobs:
           chmod 400 ~/.ssh/ssh_key
 
       - name: create ssh config
-        env:
-          HOST: ec2-13-230-136-66.ap-northeast-1.compute.amazonaws.com
+        # env:
+        #   HOST: 
         run: |
           cat <<EOT > ~/.ssh/config
           HOST deploy-test-app
-             HostName $HOST
-             IdentityFile ~/.ssh/ssh_key
-             StrictHostKeyChecking no
-             UserKnownHostsFile /dev/null
-             Port 22
-             User ec2-user
+            HostName ec2-13-230-136-66.ap-northeast-1.compute.amazonaws.com
+            User ec2-user
+            IdentityFile ~/.ssh/ssh_key
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+            Port 22
           EOT
 
       - name: run deploy
