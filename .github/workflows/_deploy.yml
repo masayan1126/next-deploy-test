@@ -84,8 +84,8 @@ jobs:
              User ec2-user
           EOT
 
-      # - name: run deploy
-      #   run: npx shipit deploy
+      - name: run deploy
+        run: npx shipit deploy
 
       - name: revoke ip address
         if: always() && steps.authorize_ip_address.outcome == 'success'
