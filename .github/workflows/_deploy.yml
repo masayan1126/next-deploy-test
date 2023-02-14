@@ -41,7 +41,7 @@ jobs:
 
       - name: Public IP Install
         id: ip
-        uses: haythem/public-ip@v1.3.0
+        uses: haythem/public-ip@v1.3
 
       - name: AWS CLI install
         run: |
