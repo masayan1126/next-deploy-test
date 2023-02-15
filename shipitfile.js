@@ -23,7 +23,7 @@ module.exports = (shipit) => {
             branch: 'origin/develop',
             deployTo: '/opt/deploy-test/',
             rsyncFrom: '.',
-            ignores: ['node_modules'],
+            ignores: ['node_modules', "aws", "awscliv2.zip", ".*", "next.config.js","README.md","shipitfile.js","tsconfig.json"],
             keepReleases: 3,
             key: '~/.ssh/ssh_key',
         }
