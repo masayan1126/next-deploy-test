@@ -23,7 +23,7 @@ module.exports = (shipit) => {
             branch: 'origin/develop',
             deployTo: '/opt/deploy-test/',
             rsyncFrom: '.',
-            ignores: ['node_modules', "aws", "awscliv2.zip", ".*", "next.config.js","README.md","shipitfile.js","tsconfig.json"],
+            ignores: ['node_modules', "aws", "awscliv2.zip", ".gitignore","README.md","shipitfile.js"],
             keepReleases: 3,
             key: '~/.ssh/ssh_key',
         }
@@ -35,8 +35,7 @@ module.exports = (shipit) => {
     
     shipit.blTask('npm:start', async () => {
         await shipit.log(`start next server ...`)
-        // await shipit.remoteCopy("package.json", "/opt/deploy-test/current/")
-        // await shipit.remoteCopy("package-lock.json", "/opt/deploy-test/current/")
-        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && node_modules/.bin/pm2 start npm --name "next" -- start`)
+        // cp env
+        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run build && node_modules/.bin/pm2 start npm --name "next" -- start`)
     })
 }
