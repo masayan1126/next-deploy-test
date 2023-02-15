@@ -1,8 +1,30 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import { useEffect, useState } from 'react'
+import { GetStaticPropsResult } from 'next'
+import axios from 'axios'
 
+export interface User {
+    userId: number
+    id: number
+    name: string
+    completed: boolean
+}
 
-export default function About() {
+interface Props {
+    users: User[]
+}
+
+export default function About(props: Props) {
+    // const [posts, setPosts] = useState([])
+
+    // useEffect(() => {
+    //     fetch('https://jsonplaceholder.typicode.com/posts')
+    //     .then(res => res.json())
+    //     .then(data => {setPosts(data)
+    //     })
+    //   },[])
+
   return (
     <>
       <Head>
@@ -12,8 +34,26 @@ export default function About() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        About page
+        <h2>サーバーサイドで取得したデータなので、ブラウザのJSを無効にしても表示できます</h2>
+        <div style={{textAlign:"start"}}>
+        {props.users.map((user: User, index)=>{
+            return <div key={index.toString()}>
+                <li>{user.id}</li>
+                <li>{user.name}</li>
+                </div> 
+        })}
+        </div>
       </main>
     </>
   )
+}
+
+export const getStaticProps = async ():Promise<GetStaticPropsResult<Props>> => {
+    const users: User[] = await (await axios.get("https://jsonplaceholder.typicode.com/users")).data
+
+    return {
+      props:{
+        users,
+      }
+    }
 }

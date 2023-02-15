@@ -1,8 +1,12 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import { useRouter } from 'next/router'
 
 
 export default function Home() {
+
+  const router = useRouter()
+
   return (
     <>
       <Head>
@@ -13,6 +17,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         Hello world
+        <button onClick={() => router.push("/about")}>１．ルーティングテスト</button>
       </main>
     </>
   )
