@@ -22,6 +22,7 @@ export default function Home() {
         c3
         c4
         c5
+        c6
         このサーバーは{process.env.NEXT_PUBLIC_ENVIRONMENT}環境です
         <button onClick={() => router.push("/about")}>１．ルーティングテスト</button>
       </main>
