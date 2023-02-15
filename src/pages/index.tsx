@@ -20,6 +20,7 @@ export default function Home() {
         c1
         c2
         c3
+        c4
         <button onClick={() => router.push("/about")}>１．ルーティングテスト</button>
       </main>
     </>
