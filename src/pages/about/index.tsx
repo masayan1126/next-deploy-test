@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
-import { GetStaticPropsResult } from 'next'
+import { GetServerSideProps, GetServerSidePropsResult } from 'next'
 import axios from 'axios'
 
 export interface User {
@@ -48,7 +48,7 @@ export default function About(props: Props) {
   )
 }
 
-export const getStaticProps = async ():Promise<GetStaticPropsResult<Props>> => {
+export const getServerSideProps = async ():Promise<GetServerSidePropsResult<Props>> => {
     const users: User[] = await (await axios.get("https://jsonplaceholder.typicode.com/users")).data
 
     return {
