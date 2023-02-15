@@ -17,6 +17,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         Hello world
+        c1
         <button onClick={() => router.push("/about")}>１．ルーティングテスト</button>
       </main>
     </>
