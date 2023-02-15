@@ -47,7 +47,7 @@ module.exports = (shipit) => {
         await shipit.log(`start next server ...`)
         // cp env
         // 初回起動：node_modules/.bin/pm2 start npm --name "next" -- start
-        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run build && node_modules/.bin/pm2 restart next`)
-        // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && node_modules/.bin/pm2 kill && npm run build && node_modules/.bin/pm2 start npm --name "next" -- start`)
+        // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run build && node_modules/.bin/pm2 restart next`)
+        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && node_modules/.bin/pm2 kill && npm run build && node_modules/.bin/pm2 start npm --name "next" -- start`)
     })
 }
