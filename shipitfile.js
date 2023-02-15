@@ -23,7 +23,7 @@ module.exports = (shipit) => {
             branch: 'origin/develop',
             deployTo: '/opt/deploy-test/',
             rsyncFrom: '.',
-            // ignores: ['.git', 'node_modules'],
+            ignores: ['node_modules'],
             keepReleases: 3,
             key: '~/.ssh/ssh_key',
         }
