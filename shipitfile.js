@@ -34,22 +34,14 @@ module.exports = (shipit) => {
     })
     
     shipit.blTask('npm:start', async () => {
-        // shipit.log(`start next server ...`)
-        // shipit
-        // .remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && node_modules/.bin/pm2 kill && npm run build && node_modules/.bin/pm2 start npm --name "next" -- start`)
-        // .then(([server1Result, server2Result]) => {
-        //     shipit.log(server1Result)
-        // })
-        // .catch(error => {
-        //     shipit.error(error.stderr)
-        // })
-
         await shipit.log(`start next server ...`)
         await shipit.remote(`ln -s /opt/deploy-test/shared/.env.prod /opt/deploy-test/current/.env.prod`)
         // pm2はグローバルインストールする(×node_modules/.bin/pm2)
+        // シークレット登録
         // cp env
         // 初回起動：node_modules/.bin/pm2 start npm --name "next" -- start
         // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run build && pm2 restart next`)
-        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && pm2 kill && npm run build:prod && pm2 start npm --name "next" -- start`)
+        // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && pm2 kill && npm run build:prod && pm2 start npm --name "next" -- start`)
+        await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run build:prod && pm2 startOrGracefulReload next`)
     })
 }
