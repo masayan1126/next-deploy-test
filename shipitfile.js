@@ -12,7 +12,7 @@ module.exports = (shipit) => {
     },
     staging: {
     servers: {
-        host: 'ec2-13-231-168-237.ap-northeast-1.compute.amazonaws.com',
+        host: 'ec2-54-64-62-219.ap-northeast-1.compute.amazonaws.com',
         port: 22,
         user: 'ec2-user',
         extraSshOptions: {
@@ -39,11 +39,9 @@ module.exports = (shipit) => {
         await shipit.remote(`ln -s /opt/deploy-test/ecosystem.config.js /opt/deploy-test/current/ecosystem.config.js`)
 
         // pm2はグローバルインストールする(×node_modules/.bin/pm2)
+        // npm install -g pm2
         // シークレット登録
-        // cp env
-        // 初回起動：node_modules/.bin/pm2 start npm --name "next" -- start
-        // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && npm run build && pm2 restart next`)
-        // await shipit.remote(`cd /opt/deploy-test/current && nvm install 16 && npm install --production && pm2 kill && npm run build:prod && pm2 start npm --name "next" -- start`)
-        await shipit.remote(`npm install -g pm2 && cd /opt/deploy-test/current && npm install --production && npm run build:prod && pm2 start ecosystem.config.js`)
+        // env、pm2のconfing実体ファイルを作成
+        await shipit.remote(`npm install -g pm2 && cd /opt/deploy-test/current && npm install --production && npm run build:prod && ~/.volta/bin/pm2 start ecosystem.config.js`)
     })
 }
