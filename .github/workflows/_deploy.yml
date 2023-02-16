@@ -79,7 +79,7 @@ jobs:
         run: |
           cat <<EOT > ~/.ssh/config
           HOST deploy-test-app
-            HostName ec2-13-230-136-66.ap-northeast-1.compute.amazonaws.com
+            HostName ec2-13-231-168-237.ap-northeast-1.compute.amazonaws.com
             User ec2-user
             IdentityFile ~/.ssh/ssh_key
             StrictHostKeyChecking no

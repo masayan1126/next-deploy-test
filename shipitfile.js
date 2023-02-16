@@ -12,7 +12,7 @@ module.exports = (shipit) => {
     },
     staging: {
     servers: {
-        host: 'ec2-13-230-136-66.ap-northeast-1.compute.amazonaws.com',
+        host: 'ec2-13-231-168-237.ap-northeast-1.compute.amazonaws.com',
         port: 22,
         user: 'ec2-user',
         extraSshOptions: {
